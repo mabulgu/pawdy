@@ -1,0 +1,35 @@
+# Pawdy Configuration File
+# Backend configuration
+backend: ollama                   # Options: llamacpp, ollama
+model_path: ./stub-model.gguf     # For llamacpp backend
+ollama_model: llama3.1:8b         # For ollama backend (use: llama3.1:8b, llama3.1:8b-instruct-q4_0)
+ollama_url: http://localhost:11434
+guard_model: llama-guard3:1b       # Ollama model name with version tag
+
+# Embeddings configuration  
+embeddings: ollama-nomic          # Options: ollama-nomic, fastembed
+embedding_model: nomic-embed-text # Ollama model for text embeddings
+
+# Vector database
+qdrant_url: http://localhost:6333  # Start with: docker run -d -p 6333:6333 -v $(pwd)/qdrant:/qdrant/storage qdrant/qdrant
+collection: pawdy_docs            # Collection name for storing document vectors
+
+# RAG parameters
+chunk_tokens: 1000                # Tokens per chunk
+chunk_overlap: 200                # Overlap between chunks
+top_k: 6                         # Number of chunks to retrieve
+rerank: true                     # Enable keyword re-ranking
+
+# Generation parameters
+temperature: 0.6                 # Creativity (0.0 = deterministic, 1.0 = creative)
+max_tokens: 1024                 # Maximum response length
+top_p: 0.9                       # Nucleus sampling
+
+# System configuration
+system_prompt: ./assets/system_prompt.md
+safety: on                       # Options: on, off
+log_level: info                  # Options: debug, info, warn, error
+
+# Performance
+context_window: 8192             # Model context window
+batch_size: 512                  # Batch size for embeddings
