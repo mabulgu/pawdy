@@ -2,7 +2,7 @@
 
 *ʕ•ᴥ•ʔ  hi, I'm Pawdy — your bare-metal onboarding buddy*
 
-Pawdy is a production-ready, fully local command-line chat assistant designed to help engineers onboard to the OpenShift Bare Metal team. It runs entirely offline using Meta's Llama models and provides RAG (Retrieval-Augmented Generation) capabilities over your team documentation.
+Pawdy is a fully local command-line chat assistant designed to help engineers onboard to the OpenShift Bare Metal team. It runs entirely offline using Meta's Llama models and provides RAG (Retrieval-Augmented Generation) capabilities over your team documentation.
 
 ## Project Structure Rationale
 
