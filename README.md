@@ -35,11 +35,6 @@ Pawdy is a fully local command-line chat assistant designed to help engineers on
 - **github.com/ledongthuc/pdf** - PDF text extraction
 - Built-in support for Markdown, HTML, and plain text
 
-**Development & Infrastructure:**
-- **Docker** - Container runtime for Qdrant
-- **Make** - Build automation and development workflows
-- **Git** - Version control
-
 **Testing:**
 - **testify** - Go testing framework with assertions
 
