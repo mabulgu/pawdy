@@ -4,36 +4,6 @@
 
 Pawdy is a fully local command-line chat assistant designed to help engineers onboard to the OpenShift Bare Metal team. It runs entirely offline using Meta's Llama models and provides RAG (Retrieval-Augmented Generation) capabilities over your team documentation.
 
-## Project Structure Rationale
-
-This project follows Go's standard project layout with some key design decisions:
-
-```
-pawdy/
-├── cmd/pawdy/           # Main application entry point
-├── internal/            # Private application code
-│   ├── app/             # Application orchestration layer
-│   ├── backend/         # LLM backend implementations (llama.cpp, Ollama)
-│   ├── cli/             # CLI command implementations
-│   ├── config/          # Configuration management
-│   ├── document/        # Document processing and chunking
-│   ├── prompt/          # Prompt templates and builders
-│   ├── rag/             # RAG pipeline (embeddings, retrieval)
-│   └── safety/          # Llama Guard 3 safety gate implementation
-├── pkg/                 # Public library code (interfaces, types)
-├── assets/              # System prompts and static files
-├── materials/           # Default directory for ingesting docs
-├── models/              # Recommended directory for GGUF models
-└── .github/workflows/   # CI/CD pipeline
-```
-
-**Rationale:**
-- `internal/` ensures clean API boundaries and prevents external dependencies on implementation details
-- `pkg/` contains stable interfaces that could be reused by other tools
-- Separation of concerns: each internal package has a single responsibility
-- `cmd/` pattern allows for future CLI expansion without architectural changes
-- `internal/app/` orchestrates all components providing a clean facade for the CLI layer
-
 ## Features
 
 - **🔒 Privacy-First**: Runs completely offline, no cloud API calls or telemetry
@@ -43,7 +13,35 @@ pawdy/
 - **⚡ Streaming**: Real-time token streaming with source citations
 - **🔧 Configurable**: YAML config with environment variable overrides
 
-## Project Structure
+## Project Architecture
+
+**Core Technologies:**
+- **Go 1.25+** - Main programming language
+- **Cobra** - CLI framework for command-line interface
+- **Viper** - Configuration management (YAML/environment variables)
+
+**LLM & AI:**
+- **Ollama** - Local LLM serving (primary backend)
+- **llama.cpp** - Alternative LLM backend with Go bindings
+- **Llama 3.1 8B** - Main language model for responses
+- **Llama Guard 3 1B** - Safety filtering and content moderation
+- **nomic-embed-text** - Text embedding model for semantic search
+
+**Vector Database & RAG:**
+- **Qdrant** - Vector database for storing document embeddings
+- **Qdrant Go Client** - Native Go integration with Qdrant
+
+**Document Processing:**
+- **github.com/ledongthuc/pdf** - PDF text extraction
+- Built-in support for Markdown, HTML, and plain text
+
+**Development & Infrastructure:**
+- **Docker** - Container runtime for Qdrant
+- **Make** - Build automation and development workflows
+- **Git** - Version control
+
+**Testing:**
+- **testify** - Go testing framework with assertions
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
@@ -91,6 +89,35 @@ pawdy/
 Legend: CI = citation inserter; materials/ = local docs folder
 ```
 
+## Project Structure Rationale
+
+This project follows Go's standard project layout with some key design decisions:
+
+```
+pawdy/
+├── cmd/pawdy/           # Main application entry point
+├── internal/            # Private application code
+│   ├── app/             # Application orchestration layer
+│   ├── backend/         # LLM backend implementations (llama.cpp, Ollama)
+│   ├── cli/             # CLI command implementations
+│   ├── config/          # Configuration management
+│   ├── document/        # Document processing and chunking
+│   ├── prompt/          # Prompt templates and builders
+│   ├── rag/             # RAG pipeline (embeddings, retrieval)
+│   └── safety/          # Llama Guard 3 safety gate implementation
+├── pkg/                 # Public library code (interfaces, types)
+├── assets/              # System prompts and static files
+├── materials/           # Default directory for ingesting docs
+├── models/              # Recommended directory for GGUF models
+└── .github/workflows/   # CI/CD pipeline
+```
+
+**Rationale:**
+- `internal/` ensures clean API boundaries and prevents external dependencies on implementation details
+- `pkg/` contains stable interfaces that could be reused by other tools
+- Separation of concerns: each internal package has a single responsibility
+- `cmd/` pattern allows for future CLI expansion without architectural changes
+- `internal/app/` orchestrates all components providing a clean facade for the CLI layer
 
 ## Prerequisites
 
